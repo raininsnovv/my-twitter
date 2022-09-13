@@ -14,4 +14,26 @@ module.exports.commentsController = {
       res.json(e.message);
     }
   },
+  getCommentById: async (req, res) => {
+    try {
+      const comment = await Comment.findById(req.params.id).populate(
+        "_userId _postId",
+        "name title"
+      );
+      res.json(comment);
+    } catch (e) {
+      res.json(e.message);
+    }
+  },
+  getCommentByPostId: async (req, res) => {
+    try {
+      const comment = await Comment.find({ _postId: req.params.id }).populate(
+        "_userId _postId",
+        "name title"
+      );
+      res.json(comment);
+    } catch (e) {
+      res.json(e.message);
+    }
+  },
 };
